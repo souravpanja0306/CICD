@@ -15,4 +15,4 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "./index.html"
-          target: "/var/www/html/"
+          target: "./var/www/html/"
