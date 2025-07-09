@@ -26,8 +26,9 @@ jobs:
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.EC2_HOST }}
-          port: '22'
           username: 'ubuntu'
           key: ${{ secrets.EC2_SSH_KEY }}
+          port: '22'
+          script: 'whoami'
           source: "build/"
           target: "/var/www/html"
