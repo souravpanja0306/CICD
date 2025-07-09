@@ -22,12 +22,6 @@ jobs:
       - name: Build React App
         run: npm run build
 
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: 'ubuntu'
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: '22'
-          source: "build/"
-          target: "/var/www/html"
+      - name: Copy files via rsync
+        run: |
+          rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" build/ ubuntu@${{ secrets.EC2_HOST }}:/var/www/html
