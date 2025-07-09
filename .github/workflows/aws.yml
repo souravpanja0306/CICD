@@ -22,6 +22,11 @@ jobs:
       - name: Build React App
         run: npm run build
 
-      - name: Copy files via rsync
-        run: |
-          rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" build/ ubuntu@${{ secrets.EC2_HOST }}:/var/www/html
+      - name: Copy folder content recursively to remote
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: "build/"
+          remote:  "/var/www/html"
+          host: ${{ secrets.EC2_HOST }}
+          username:  'ubuntu'
+          key: ${{ secrets.EC2_SSH_KEY }}
